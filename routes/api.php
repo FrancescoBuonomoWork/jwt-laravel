@@ -34,5 +34,5 @@ Route::group([
 Route::group([
     'middleware' => 'api'
 ], function ($router) {
-    Route::get('test', [TestController::class, 'test']);
+    Route::post('create', [TestController::class, 'create'])->name('api.create');
 });
