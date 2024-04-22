@@ -35,4 +35,6 @@ Route::group([
     'middleware' => 'api'
 ], function ($router) {
     Route::post('create', [TestController::class, 'create'])->name('api.create');
+    Route::get('getPayment/{token}', [TestController::class, 'getPayment'])->name('api.getPayment');
+    Route::get('payments/filter', [TestController::class, 'filterPayments'])->name('api.filterPayments');
 });
