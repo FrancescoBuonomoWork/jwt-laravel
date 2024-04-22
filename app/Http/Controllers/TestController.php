@@ -72,7 +72,7 @@ class TestController extends Controller
     } 
     public function getPayment($token){
      
-        $payment = Payment::where('token',$token)->first();
+        $payment = Payment::where('token',$token)->with('products')->first();
         if (!$payment) {
             return response()->json(['status' => false, 'message' => 'Pagamento non trovato'], 404);
         }
@@ -90,7 +90,7 @@ class TestController extends Controller
         $user = User::where('token',$request->input('token'))->first();
         // dd($user);
         // Filtra i pagamenti associati all'utente autenticato
-        $payments = Payment::where('company_id', $user->id);
+        $payments = Payment::where('company_id', $user->id)->with('products');
         if(!$payments){
             return response()->json(['status' => false, 'message' => 'errore']);
         }
@@ -124,9 +124,9 @@ class TestController extends Controller
      
             // Esegui la query per ottenere i risultati
             $filteredPayments = $payments->get();
-        
+            // dd($payments);
             // Ritorna i pagamenti filtrati
-            return response()->json(['status' => true, 'data' => $filteredPayments]);
+            return response()->json(['status' => true,'nums_rows' => $filteredPayments->count(), 'data' => $filteredPayments]);
         }
 
 }
